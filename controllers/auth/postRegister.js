@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../../models/user");
+const jwt = require("jsonwebtoken");
+
 const postRegister = async (req, res, next) => {
   try {
     const { username, password, mail } = req.body;
@@ -7,7 +9,9 @@ const postRegister = async (req, res, next) => {
     console.log(userExist);
     //checking if user existsi
     if (userExist) {
-       return res.status(409).send("This email is already registerd, Please login!");
+      return res
+        .status(409)
+        .send("This email is already registerd, Please login!");
     }
     // encrypt password
     encryptedPassword = await bcrypt.hash(password, 10);
@@ -18,11 +22,22 @@ const postRegister = async (req, res, next) => {
       password: encryptedPassword,
     });
     //create JWT token
-    const token = "JWT TOKEN";
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        mail,
+      },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "24h",
+      }
+    );
     res.status(201).json({
-      username: user.username,
-      mail: user.mail,
-      token: token,
+      userDetails: {
+        mail: user.mail,
+        token: token,
+        username: user.username,
+      },
     });
   } catch (error) {
     console.log(error);
