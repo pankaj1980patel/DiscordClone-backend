@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const FriendInvitation = require("../../models/friendInvitation");
+const friendsUpdates = require("../../socketHandlers/updates/friends");
 const postInvite = async (req, res) => {
   const { mail } = req.body;
 
@@ -37,6 +38,11 @@ const postInvite = async (req, res) => {
     senderId: userId,
     receiverId: targetUser._id,
   });
+  //if invitation sent succesfully we would like to update the friend list
+  console.log("from targer user id = ", targetUser._id)
+  //send pending invitation update to specific user
+  friendsUpdates.updateFriendsPendingInvitations(targetUser._id.toString());
+
   return res.send("contoller is working");
 };
 
