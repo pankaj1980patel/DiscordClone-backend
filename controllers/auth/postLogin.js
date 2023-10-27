@@ -7,13 +7,11 @@ const postLogin = async (req, res, next) => {
     const { mail, password } = req.body;
     const user = await User.findOne({ mail: mail.toLowerCase() });
     if (!user) {
-      return res
-        .status(401)
-        .send("This user doesn't exist. Please Register");
+      return res.status(401).send("This user doesn't exist. Please Register");
     }
     if (user && bcrypt.compare(password, user.password)) {
       //send new token
-      const token =  jwt.sign(
+      const token = jwt.sign(
         {
           userId: user._id,
           mail,
@@ -28,6 +26,7 @@ const postLogin = async (req, res, next) => {
           mail: user.mail,
           token: token,
           username: user.username,
+          _id: user._id, 
         },
       });
     }
