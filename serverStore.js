@@ -1,5 +1,3 @@
-const { connection } = require("mongoose");
-
 const connectedUser = new Map();
 let io;
 const setSocketServerInstance = (ioInstance) => {
