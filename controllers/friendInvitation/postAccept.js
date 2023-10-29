@@ -10,7 +10,7 @@ const postAccept = async (req, res) => {
       res.status(401).send("Error occured, Please try again later!");
     }
     const { senderId, receiverId } = invitation;
-    console.log("invitation ======", invitation);
+    // console.log("invitation ======", invitation);
     const sender = await User.findById(senderId);
     const receiver = await User.findById(receiverId);
     if (!sender || !receiver) {

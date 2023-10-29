@@ -2,12 +2,12 @@ const User = require("../../models/user");
 const FriendInvitation = require("../../models/friendInvitation");
 const serverStore = require("../../serverStore");
 const updateFriendsPendingInvitations = async (userId) => {
-  console.log("user id form update friends", userId);
+  // console.log("user id form update friends", userId);
   try {
     const pendingInvitation = await FriendInvitation.find({
       receiverId: userId,
     }).populate("senderId", "_id username mail");
-    console.log(pendingInvitation);
+    // console.log(pendingInvitation);
     //find all active connection of specific userId
     const receiverList = serverStore.getActiveConnections(userId);
     const io = serverStore.getSocketServerInstance();

@@ -39,7 +39,7 @@ const postInvite = async (req, res) => {
     receiverId: targetUser._id,
   });
   //if invitation sent succesfully we would like to update the friend list
-  console.log("from targer user id = ", targetUser._id)
+  // console.log("from targer user id = ", targetUser._id)
   //send pending invitation update to specific user
   friendsUpdates.updateFriendsPendingInvitations(targetUser._id.toString());
 
