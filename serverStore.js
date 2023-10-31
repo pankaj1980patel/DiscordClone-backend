@@ -80,15 +80,15 @@ const joinActiveRoom = (roomId, newParticipant) => {
   // console.log("active roomms", activeRooms);
 };
 
-const leaveActiveRoom = (roomId, userId) => {
+const leaveActiveRoom = (roomId, socketId) => {
   console.log("from leave room active room s === ", activeRooms);
   const activeRoom = activeRooms.find((room) => room.roomId === roomId);
-  console.log("we want something from room == ", activeRoom);
-  console.log("participantsSocketId == ", userId);
+  console.log("we got our room == ", activeRoom);
+  console.log("participantsSocketId == ", socketId);
   if (activeRoom) {
     let copyOfActiveRoom = { ...activeRoom };
     copyOfActiveRoom.participants = copyOfActiveRoom.participants.filter(
-      (participant) => participant.userId !== userId
+      (participant) => participant.socketId !== socketId
     );
     activeRooms = activeRooms.filter((room) => room.roomId !== roomId);
     console.log(
